@@ -4,7 +4,7 @@ def run_game(turns, is_crooked_dice):
     position = 1
     snakes = [(97, 62), (77, 33), (54, 28), (38,11)]
     while turns > 0 and position < 100 :
-        if is_crooked_dice:
+        if is_crooked_dice is True:
             number = random.randint(1,6)
         else:
             number = random.choice([2,4,6])
@@ -13,13 +13,10 @@ def run_game(turns, is_crooked_dice):
             break
         snake_on_path = next(filter(lambda item: item[0] == position, snakes), None)
         if snake_on_path is not None:
-            print("Biten by snake, jumping down from %s to %s" % (position, snake_on_path[1]))
             position = snake_on_path[1]
         turns -= 1
-    if position >= 100:
-        print("You win! congrats!")
-    else:
-        print("game ended! you reached %s" % position)
+    return position
+
 
 def main():
     print("Crooked Dice ? (Y/N) : ", end="")
@@ -31,7 +28,11 @@ def main():
         turns = int(input().strip())
     except ValueError:
         turns = 10
-    run_game(turns, is_crooked_dice)
+    position = run_game(turns, is_crooked_dice)
+    if position >= 100:
+        print("You win! congrats!")
+    else:
+        print("game ended! you reached %s" % position)
 
 
 if __name__ == "__main__":
